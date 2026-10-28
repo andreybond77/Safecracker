@@ -1,0 +1,53 @@
+/* ============================================
+   ⚙️ СЛОЖНОСТЬ — стили
+   ============================================ */
+
+.difficulty-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.difficulty-btn {
+  margin-bottom: 0;
+  position: relative;
+}
+
+.difficulty-btn.active {
+  background: linear-gradient(180deg, #e0e0e0, #a0a0a0);
+  color: #1a1a1a;
+  box-shadow: 0 4px 0 #666, 0 0 18px rgba(200, 200, 200, 0.6);
+}
+.difficulty-btn.active:hover {
+  box-shadow: 0 6px 0 #666, 0 0 24px rgba(200, 200, 200, 0.8);
+  filter: brightness(1.05);
+}
+.difficulty-btn.active:active {
+  box-shadow: 0 2px 0 #666, 0 0 12px rgba(200, 200, 200, 0.5);
+}
+.difficulty-btn.active::before {
+  content: "✓ ";
+  font-weight: bold;
+}
+
+.hint {
+  font-size: 14px;
+  color: #aaa;
+  margin-top: 4px;
+}
+.hint span {
+  color: #e0e0e0;
+  font-weight: bold;
+  text-shadow: 0 0 8px rgba(200, 200, 200, 0.4);
+}
+
+@media (max-width: 500px) {
+  .difficulty-list { gap: 10px; margin-bottom: 14px; }
+  .hint { font-size: 13px; }
+}
+
+@media (max-height: 640px) {
+  .difficulty-list { gap: 8px; margin-bottom: 10px; }
+  .hint { font-size: 12px; }
+}

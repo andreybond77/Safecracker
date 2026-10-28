@@ -1,0 +1,164 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100dvh;
+  min-height: 100svh;
+  padding: 12px;
+  font-family: 'Segoe UI', Arial, sans-serif;
+
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.2) 0%, transparent 70%),
+    repeating-linear-gradient(45deg, rgba(0,0,0,0.05) 0px, rgba(0,0,0,0.05) 1px, transparent 1px, transparent 4px),
+    linear-gradient(135deg, #a0a0a0 0%, #d0d0d0 25%, #808080 50%, #b0b0b0 75%, #707070 100%);
+  background-color: #888;
+  background-attachment: fixed;
+
+  color: #fff;
+  user-select: none;
+  -webkit-user-select: none;
+  overflow: hidden;
+}
+
+/* ============================================
+   ЕДИНЫЙ КАРКАС СТРАНИЦЫ
+   ============================================ */
+.app-shell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: stretch;
+  width: min(100%, calc((100dvh - 24px) * 3 / 4));
+  aspect-ratio: 3 / 4;
+  max-width: 620px;
+  max-height: 100%;
+  flex: 0 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 24px;
+}
+
+/* ============================================
+   КНОПКИ-КРУЖКИ
+   ============================================ */
+.circle-btn {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  cursor: pointer;
+  border: 2px solid rgba(0, 0, 0, 0.4);
+  background: linear-gradient(180deg, #888, #444);
+  color: #fff;
+  text-decoration: none;
+  z-index: 10;
+  transition: 0.15s;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.6);
+}
+.circle-btn:hover { transform: scale(1.08); filter: brightness(1.2); }
+.circle-btn:active { transform: scale(0.95); }
+.circle-btn.top-right { top: 12px; right: 12px; }
+.circle-btn.top-left { top: 12px; left: 12px; }
+.circle-btn.danger { background: linear-gradient(180deg, #6a6a6a, #3a3a3a); }
+
+/* ============================================
+   КАРТОЧКА-СТРАНИЦА
+   ============================================ */
+.page-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  overflow-y: auto;
+
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.2) 100%),
+    repeating-linear-gradient(90deg, #4a4a4a 0px, #5a5a5a 2px, #3a3a3a 4px);
+  background-color: #444;
+
+  border: 6px solid #2a2a2a;
+  border-radius: 16px;
+  padding: 28px 24px;
+  box-shadow:
+    0 0 40px rgba(0, 0, 0, 0.8),
+    inset 0 0 30px rgba(0, 0, 0, 0.6),
+    inset 0 0 0 2px #777;
+  text-align: center;
+  scrollbar-width: thin;
+}
+
+.page-title {
+  font-size: 28px;
+  color: #e0e0e0;
+  margin-bottom: 20px;
+  padding: 0 44px;
+  text-shadow: 0 0 10px rgba(200, 200, 200, 0.5), 0 2px 4px rgba(0,0,0,0.8);
+  flex: 0 0 auto;
+}
+
+/* ============================================
+   НАВИГАЦИОННЫЕ КНОПКИ МЕНЮ
+   ============================================ */
+.nav-btn {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  margin-bottom: 12px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #1a1a1a;
+  background: linear-gradient(180deg, #c0c0c0, #808080);
+  border: 2px solid #999;
+  border-radius: 14px;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  transition: 0.15s;
+  box-shadow: 0 4px 0 #555;
+}
+.nav-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #555; filter: brightness(1.08); }
+.nav-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #555; }
+.nav-btn.secondary { background: linear-gradient(180deg, #a0a0a0, #606060); color: #fff; box-shadow: 0 4px 0 #3a3a3a; }
+.nav-btn.secondary:hover { box-shadow: 0 6px 0 #3a3a3a; }
+.nav-btn.back { background: linear-gradient(180deg, #909090, #505050); color: #fff; box-shadow: 0 4px 0 #2a2a2a; }
+.nav-btn.back:hover { box-shadow: 0 6px 0 #2a2a2a; }
+
+/* ============================================
+   МОБИЛЬНАЯ АДАПТАЦИЯ
+   ============================================ */
+@media (max-width: 500px) {
+  body { padding: 8px; }
+  .page-card { padding: 20px 14px; border-width: 4px; }
+  .page-title { font-size: 22px; padding: 0 40px; margin-bottom: 16px; }
+  .nav-btn { font-size: 16px; padding: 14px; margin-bottom: 10px; }
+  .circle-btn { width: 42px; height: 42px; font-size: 18px; }
+}
+
+@media (max-height: 640px) {
+  body { padding: 6px; }
+  .page-card { padding: 14px 10px; border-width: 4px; }
+  .page-title { font-size: 18px; margin-bottom: 10px; padding: 0 36px; }
+  .nav-btn { padding: 10px; margin-bottom: 6px; font-size: 14px; }
+  .circle-btn { width: 36px; height: 36px; font-size: 16px; top: 8px; right: 8px; }
+  .circle-btn.top-left { left: 8px; }
+}

@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title> Safecracker</title>
+  <link rel="stylesheet" href="../style/common.css">
+  <link rel="stylesheet" href="../style/game.css">
+</head>
+<body>
+  <div class="app-shell">
+    <div class="game">
+      <!-- Кнопка звука СЛЕВА -->
+      <button id="soundToggleBtn" class="circle-btn top-left sound-btn" aria-label="Выключить звук">🔊</button>
+      <!-- Кнопка выхода СПРАВА -->
+      <a href="menu.html" id="exitMenuBtn" class="circle-btn top-right exit-btn" aria-label="В меню">✕</a>
+
+      <header class="header">
+        <div class="side-panel">
+          <span class="side-label">Время</span>
+          <span class="side-value" id="timerValue">00:00</span>
+        </div>
+
+        <div class="panels">
+          <div class="panel">
+            <span class="target-label">Код</span>
+            <div class="target-digits" id="targetDigits"></div>
+          </div>
+          <div class="panel">
+            <span class="target-label">Панель</span>
+            <div class="target-digits active-digits" id="activeDigits"></div>
+          </div>
+        </div>
+
+        <div class="side-panel">
+          <span class="side-label">Ходы</span>
+          <span class="side-value" id="movesCount">0</span>
+        </div>
+      </header>
+
+      <div class="field-wrapper">
+        <svg id="field" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid meet"></svg>
+      </div>
+
+      <div class="controls">
+        <div class="cross">
+          <button class="cross-btn cross-top" id="rotateMechCW" aria-label="Поворот механизма по часовой">⟳</button>
+          <button class="cross-btn cross-left" id="rotateCCW" aria-label="Вращение против часовой">⟳</button>
+          <button class="cross-btn cross-center" id="restartCrossBtn" aria-label="Начать заново">↺</button>
+          <button class="cross-btn cross-right" id="rotateCW" aria-label="Вращение по часовой">⟲</button>
+          <button class="cross-btn cross-bottom" id="rotateMechCCW" aria-label="Поворот механизма против часовой">⟲</button>
+        </div>
+      </div>
+
+      <div class="status" id="status">Тащите солнечную шестерёнку в нужную позицию</div>
+    </div>
+  </div>
+
+  <script src="../script/game.js"></script>
+</body>
+</html>

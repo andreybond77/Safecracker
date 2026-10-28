@@ -1,0 +1,20 @@
+.rules-content {
+  text-align: left;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #ddd;
+  overflow-y: auto;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.rules-content p { margin-bottom: 12px; }
+.rules-content ul { margin: 8px 0 12px 20px; }
+.rules-content li { margin-bottom: 6px; }
+.rules-content b { color: #e0e0e0; }
+
+@media (max-width: 500px) {
+  .rules-content { font-size: 13px; line-height: 1.5; }
+  .rules-content p { margin-bottom: 10px; }
+  .rules-content li { margin-bottom: 5px; }
+}

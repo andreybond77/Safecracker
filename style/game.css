@@ -1,0 +1,559 @@
+/* ============================================
+   🔐 SAFECRACKER — стили
+   ============================================ */
+
+/* ============================================
+   ИГРОВОЙ ЭКРАН
+   ============================================ */
+.game {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+
+  padding: 16px;
+  padding-top: 64px;
+
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.2) 100%),
+    repeating-linear-gradient(90deg, #4a4a4a 0px, #5a5a5a 2px, #3a3a3a 4px);
+  background-color: #444;
+
+  border: 6px solid #2a2a2a;
+  border-radius: 16px;
+  box-shadow:
+    0 0 40px rgba(0, 0, 0, 0.8),
+    inset 0 0 30px rgba(0, 0, 0, 0.6),
+    inset 0 0 0 2px #777;
+  overflow: hidden;
+}
+
+/* --- Кнопки в верхних углах --- */
+.exit-btn {
+  right: 12px;
+}
+
+.sound-btn {
+  left: 12px;
+  font-size: 24px;
+}
+
+/* --- Шапка с панелями и счётчиками --- */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  flex: 0 0 auto;
+  flex-shrink: 0;
+  z-index: 2;
+  width: 100%;
+}
+
+/* --- Боковые панели (Таймер и Ходы) --- */
+.side-panel {
+  background: rgba(0, 0, 0, 0.35);
+  border: 2px solid #555;
+  border-radius: 8px;
+  padding: 6px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.6);
+  width: 64px;
+  flex: 0 0 auto;
+}
+
+.side-label {
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: #aaa;
+  text-transform: uppercase;
+}
+
+.side-value {
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Центральный блок с панелями --- */
+.panels {
+  display: grid;
+  grid-template-columns: max-content;
+  justify-content: center;
+  gap: 6px;
+  flex: 1 1 auto;
+}
+
+.panel {
+  background: rgba(0, 0, 0, 0.35);
+  border: 2px solid #555;
+  border-radius: 8px;
+  padding: 4px 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.6);
+  width: auto;
+}
+
+.target-label {
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: #aaa;
+  text-transform: uppercase;
+  min-width: 56px;
+  text-align: right;
+  flex: 0 0 auto;
+}
+
+.target-digits {
+  display: flex;
+  gap: 6px;
+  flex: 0 0 auto;
+  justify-content: center;
+}
+
+/* --- Цифры в панелях: серый металлик --- */
+.target-digit {
+  font-size: 20px;
+  font-weight: bold;
+  color: #e0e0e0;
+  text-shadow: 0 0 8px rgba(200, 200, 200, 0.5);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.4);
+  border: 2px solid #888;
+  border-radius: 6px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
+  transition: 0.2s;
+}
+
+.active-digits .target-digit {
+  color: #d0d0d0;
+  text-shadow: 0 0 10px rgba(200, 200, 200, 0.7);
+  border-color: #aaa;
+}
+
+.target-digit.win-match {
+  color: #ffffff;
+  text-shadow: 0 0 15px rgba(255, 255, 255, 1);
+  border-color: #ffffff;
+  background: rgba(255, 255, 255, 0.2);
+  animation: pulseWin 0.5s infinite alternate;
+}
+
+@keyframes pulseWin {
+  from { transform: scale(1); box-shadow: 0 0 8px rgba(255, 255, 255, 0.6); }
+  to { transform: scale(1.1); box-shadow: 0 0 20px rgba(255, 255, 255, 1); }
+}
+
+/* --- Поле с SVG --- */
+.field-wrapper {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: 4px 0;
+}
+
+#field {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  aspect-ratio: 1 / 1;
+  filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.5));
+}
+
+/* --- Управление (крестовина) --- */
+.controls {
+  flex: 0 0 auto;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  padding: 8px 0;
+}
+
+.cross {
+  display: grid;
+  grid-template-columns: 48px 48px 48px;
+  grid-template-rows: 48px 48px 48px;
+  gap: 4px;
+}
+
+/* --- Кнопки крестовины: серый металлик --- */
+.cross-btn {
+  border-radius: 50%;
+  border: 2px solid #888;
+  background: linear-gradient(180deg, #9a9a9a, #5a5a5a);
+  color: #fff;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.15s;
+  box-shadow:
+    0 3px 6px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  user-select: none;
+  -webkit-user-select: none;
+  padding: 0;
+}
+
+.cross-btn:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
+.cross-btn:active {
+  transform: scale(0.95);
+  box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.5);
+}
+
+.cross-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Позиционирование */
+.cross-top { grid-column: 2; grid-row: 1; }
+.cross-left { grid-column: 1; grid-row: 2; font-size: 20px; }
+.cross-center { grid-column: 2; grid-row: 2; font-size: 20px; }
+.cross-right { grid-column: 3; grid-row: 2; font-size: 20px; }
+.cross-bottom { grid-column: 2; grid-row: 3; }
+
+/* ============================================
+   ОТТЕНКИ ДЛЯ КНОПОК
+   ============================================ */
+
+.cross-top,
+.cross-bottom {
+  background: linear-gradient(180deg, #a8a8a8, #6a6a6a);
+  border-color: #999;
+}
+
+.cross-top:hover,
+.cross-bottom:hover {
+  background: linear-gradient(180deg, #c0c0c0, #7a7a7a);
+}
+
+.cross-left,
+.cross-right {
+  background: linear-gradient(180deg, #7a7a7a, #3a3a3a);
+  border-color: #666;
+}
+
+.cross-left:hover,
+.cross-right:hover {
+  background: linear-gradient(180deg, #909090, #4a4a4a);
+}
+
+.cross-center {
+  background: linear-gradient(180deg, #8e8e8e, #4e4e4e);
+  border-color: #777;
+}
+
+.cross-center:hover {
+  background: linear-gradient(180deg, #a5a5a5, #606060);
+}
+
+/* --- Статусная строка --- */
+.status {
+  flex: 0 0 auto;
+  flex-shrink: 0;
+  text-align: center;
+  font-size: 12px;
+  color: #ccc;
+  padding: 4px 8px;
+  margin-top: 4px;
+  min-height: 24px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+}
+
+/* ============================================
+   SVG-СТИЛИ
+   ============================================ */
+
+.mechanism-group {
+  transform-box: view-box;
+  transform-origin: 100px 100px;
+}
+
+/* ============================================
+   ЦЕНТРАЛЬНЫЙ ШТУРВАЛ
+   ============================================ */
+
+.center-wheel-group {
+  transition: opacity 0.3s ease;
+  will-change: transform;
+}
+
+.center-wheel-group.on-top {
+  cursor: pointer;
+}
+
+.center-wheel-group.on-top .center-wheel {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.center-wheel-group.on-top .center-wheel-hub,
+.center-wheel-group.on-top .center-wheel-spoke,
+.center-wheel-group.on-top .center-wheel-icon {
+  pointer-events: none;
+}
+
+.center-wheel {
+  fill: rgba(40, 40, 40, 0.9);
+  stroke: #b0b0b0;
+  stroke-width: 2;
+  transition: fill 0.3s, stroke 0.3s, transform 0.3s;
+}
+
+.center-wheel.win-active {
+  fill: rgba(220, 220, 220, 0.35);
+  stroke: #ffffff;
+  stroke-width: 2.5;
+  animation: wheelGlow 0.8s infinite alternate;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+@keyframes wheelGlow {
+  from { filter: drop-shadow(0 0 5px #ffffff); }
+  to   { filter: drop-shadow(0 0 20px #ffffff); }
+}
+
+.center-wheel-spoke {
+  stroke: #888;
+  stroke-width: 3;
+  transition: stroke 0.3s;
+}
+
+.center-wheel-group.on-top .center-wheel-spoke {
+  stroke: #ccc;
+}
+
+.center-wheel-hub {
+  fill: #444;
+  stroke: #b0b0b0;
+  stroke-width: 1.5;
+  transition: fill 0.3s, stroke 0.3s;
+}
+
+.center-wheel-group.on-top .center-wheel-hub {
+  fill: #666;
+  stroke: #fff;
+}
+
+.center-wheel-icon {
+  font-size: 12px;
+  text-anchor: middle;
+  dominant-baseline: central;
+  pointer-events: none;
+}
+
+/* --- Сателлиты --- */
+.satellite-bg {
+  stroke: #333;
+  stroke-width: 2;
+  transition: filter 0.2s;
+}
+
+.satellite-group:hover .satellite-bg {
+  filter: brightness(1.2);
+}
+
+.satellite-knob {
+  fill: #222;
+  stroke: #777;
+  stroke-width: 1.5;
+}
+
+.satellite-knob-mark {
+  fill: #b0b0b0;
+}
+
+.satellite-digit {
+  font-size: 10px;
+  fill: #ddd;
+  text-anchor: middle;
+  dominant-baseline: central;
+  font-weight: bold;
+}
+
+.satellite-active-digit {
+  font-size: 12px;
+  fill: #ffffff;
+  text-anchor: middle;
+  dominant-baseline: central;
+  font-weight: bold;
+  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.95))
+          drop-shadow(0 0 6px rgba(255, 255, 255, 0.6));
+}
+
+/* ============================================
+   СОЛНЕЧНАЯ ШЕСТЕРЁНКА — ЛИМБ
+   ============================================ */
+
+.sun-rim {
+  fill: url(#sunGradient);
+  stroke: #b0b0b0;
+  stroke-width: 2;
+  transition: fill 0.3s, stroke 0.3s;
+}
+.sun-rim.in-center {
+  fill: rgba(50, 50, 50, 0.7);
+  stroke-dasharray: 4 2;
+  stroke: #888;
+}
+
+.sun-face {
+  fill: rgba(0, 0, 0, 0.45);
+  stroke: rgba(180, 180, 180, 0.35);
+  stroke-width: 1;
+}
+
+.sun-tooth {
+  stroke: #a0a0a0;
+  stroke-width: 1;
+  stroke-linecap: round;
+}
+.sun-tooth-major {
+  stroke: #e0e0e0;
+  stroke-width: 1.6;
+}
+
+.sun-hub {
+  fill: #2a2a2a;
+  stroke: #b0b0b0;
+  stroke-width: 1.5;
+}
+
+.sun-hole {
+  fill: #111;
+}
+
+.sun-drag-target {
+  fill: transparent;
+  cursor: grab;
+}
+.sun-drag-target:active { cursor: grabbing; }
+.sun-drag-target.in-center { cursor: default; }
+
+.sun-limb {
+  will-change: transform, opacity;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* ============================================
+   ЭФФЕКТ "ЗАЕЗДА" СОЛНЕЧНОЙ ПОД ШТУРВАЛ
+   ============================================ */
+
+.sun-group {
+  transition: opacity 0.45s ease;
+  transform-box: view-box;
+}
+
+.sun-group.win-pending {
+  opacity: 0.85;
+}
+
+.sun-group.win-pending .sun-limb {
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.5));
+}
+
+.sun-group.under-wheel {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.sun-group.under-wheel .sun-limb {
+  transform: scale(0.72) rotate(var(--limb-rot, 0deg));
+  opacity: 0.8;
+}
+
+.sun-group.under-wheel .sun-drag-target {
+  cursor: default;
+}
+
+.center-wheel-group.on-top {
+  animation: wheelRise 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes wheelRise {
+  0%   { opacity: 0.4; transform: scale(0.85); }
+  60%  { opacity: 1;   transform: scale(1.08); }
+  100% { opacity: 1;   transform: scale(1); }
+}
+
+.center-wheel-group.on-top .center-wheel.win-active {
+  fill: rgba(240, 240, 240, 0.45);
+  stroke: #ffffff;
+  stroke-width: 3;
+  animation: wheelGlow 0.7s infinite alternate;
+}
+
+.center-wheel-group.on-top .center-wheel-hub {
+  fill: #777;
+  stroke: #fff;
+  stroke-width: 2;
+}
+
+.sun-drag-target.win-ready {
+  animation: sunReadyPulse 1s infinite alternate;
+}
+
+@keyframes sunReadyPulse {
+  from { filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.5)); }
+  to   { filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.95)); }
+}
+
+.link-line {
+  stroke: rgba(180, 180, 180, 0.4);
+  stroke-width: 1.5;
+  stroke-dasharray: 4 2;
+  pointer-events: none;
+}
+
+/* ============================================
+   МОБИЛЬНАЯ АДАПТАЦИЯ
+   ============================================ */
+@media (max-width: 500px) {
+  .game { padding: 10px; padding-top: 56px; border-width: 4px; }
+  .cross { grid-template-columns: 42px 42px 42px; grid-template-rows: 42px 42px 42px; }
+  .cross-btn { font-size: 20px; }
+  .cross-left, .cross-right, .cross-center { font-size: 17px; }
+  .target-digit { width: 28px; height: 28px; font-size: 17px; }
+  .side-panel { width: 56px; }
+  .side-value { font-size: 17px; }
+}
+
+@media (max-height: 700px) {
+  .game { padding-top: 52px; }
+  .cross { grid-template-columns: 40px 40px 40px; grid-template-rows: 40px 40px 40px; }
+  .cross-btn { font-size: 18px; }
+  .cross-left, .cross-right, .cross-center { font-size: 15px; }
+  .status { font-size: 11px; min-height: 20px; }
+}
