@@ -15,7 +15,7 @@
   min-height: 0;
 
   padding: 16px;
-  padding-top: 64px;
+  padding-top: 12px;
 
   background:
     linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.2) 100%),
@@ -41,20 +41,98 @@
   font-size: 24px;
 }
 
-/* --- Шапка с панелями и счётчиками --- */
+/* --- Панели с цифрами --- */
+.panels {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.panels .panel {
+  pointer-events: auto;
+}
+
+.panel {
+  background: rgba(0, 0, 0, 0.35);
+  border: 2px solid #555;
+  border-radius: 10px;
+  padding: 6px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.6);
+  width: auto;
+  min-width: 140px;
+}
+
+.target-digits {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+/* --- Цифры в панелях --- */
+.target-digit {
+  font-size: 24px;
+  font-weight: bold;
+  color: #e0e0e0;
+  text-shadow: 0 0 8px rgba(200, 200, 200, 0.5);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.4);
+  border: 2px solid #888;
+  border-radius: 8px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
+  transition: 0.2s;
+}
+
+/* --- Эффект "скрытой записи" --- */
+.active-digits .target-digit {
+  color: transparent;
+  -webkit-text-stroke: 1.5px #d0d0d0;
+  text-shadow: none;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* --- Совпадение (победа) --- */
+.target-digit.win-match {
+  color: #ffffff;
+  -webkit-text-stroke: 0px transparent;
+  text-shadow: 0 0 15px rgba(255, 255, 255, 1);
+  border-color: #ffffff;
+  background: rgba(255, 255, 255, 0.2);
+  animation: pulseWin 0.5s infinite alternate;
+}
+
+@keyframes pulseWin {
+  from { transform: scale(1); box-shadow: 0 0 8px rgba(255, 255, 255, 0.6); }
+  to { transform: scale(1.1); box-shadow: 0 0 20px rgba(255, 255, 255, 1); }
+}
+
+/* --- Шапка с счётчиками --- */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 8px;
   margin-bottom: 8px;
+  margin-top: 56px;
   flex: 0 0 auto;
   flex-shrink: 0;
   z-index: 2;
   width: 100%;
 }
 
-/* --- Боковые панели (Таймер и Ходы) --- */
 .side-panel {
   background: rgba(0, 0, 0, 0.35);
   border: 2px solid #555;
@@ -83,83 +161,6 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* --- Центральный блок с панелями --- */
-.panels {
-  display: grid;
-  grid-template-columns: max-content;
-  justify-content: center;
-  gap: 6px;
-  flex: 1 1 auto;
-}
-
-.panel {
-  background: rgba(0, 0, 0, 0.35);
-  border: 2px solid #555;
-  border-radius: 8px;
-  padding: 4px 10px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.6);
-  width: auto;
-}
-
-.target-label {
-  font-size: 9px;
-  letter-spacing: 1px;
-  color: #aaa;
-  text-transform: uppercase;
-  min-width: 56px;
-  text-align: right;
-  flex: 0 0 auto;
-}
-
-.target-digits {
-  display: flex;
-  gap: 6px;
-  flex: 0 0 auto;
-  justify-content: center;
-}
-
-/* --- Цифры в панелях: серый металлик --- */
-.target-digit {
-  font-size: 20px;
-  font-weight: bold;
-  color: #e0e0e0;
-  text-shadow: 0 0 8px rgba(200, 200, 200, 0.5);
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.4);
-  border: 2px solid #888;
-  border-radius: 6px;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
-  transition: 0.2s;
-}
-
-.active-digits .target-digit {
-  color: #d0d0d0;
-  text-shadow: 0 0 10px rgba(200, 200, 200, 0.7);
-  border-color: #aaa;
-}
-
-.target-digit.win-match {
-  color: #ffffff;
-  text-shadow: 0 0 15px rgba(255, 255, 255, 1);
-  border-color: #ffffff;
-  background: rgba(255, 255, 255, 0.2);
-  animation: pulseWin 0.5s infinite alternate;
-}
-
-@keyframes pulseWin {
-  from { transform: scale(1); box-shadow: 0 0 8px rgba(255, 255, 255, 0.6); }
-  to { transform: scale(1.1); box-shadow: 0 0 20px rgba(255, 255, 255, 1); }
-}
-
 /* --- Поле с SVG --- */
 .field-wrapper {
   flex: 1 1 auto;
@@ -167,113 +168,93 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
+  position: relative; /* Важно для абсолютного позиционирования кнопок */
   overflow: hidden;
-  padding: 4px 0;
+  padding: 0;
 }
 
 #field {
   display: block;
-  margin: 0 auto;
   width: 100%;
   height: 100%;
   max-width: 100%;
   max-height: 100%;
-  aspect-ratio: 1 / 1;
   filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.5));
 }
 
-/* --- Управление (крестовина) --- */
-.controls {
-  flex: 0 0 auto;
-  flex-shrink: 0;
-  display: flex;
-  justify-content: center;
-  padding: 8px 0;
-}
-
-.cross {
-  display: grid;
-  grid-template-columns: 48px 48px 48px;
-  grid-template-rows: 48px 48px 48px;
-  gap: 4px;
-}
-
-/* --- Кнопки крестовины: серый металлик --- */
-.cross-btn {
+/* ============================================
+   КНОПКИ УПРАВЛЕНИЯ НА КРУГЕ
+   ============================================ */
+.ring-btn {
+  position: absolute;
+  transform: translate(-50%, -50%); /* Центрируем кнопку */
+  
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   border: 2px solid #888;
   background: linear-gradient(180deg, #9a9a9a, #5a5a5a);
   color: #fff;
-  font-size: 24px;
+  font-size: 22px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: 0.15s;
+  transition: transform 0.15s, filter 0.15s, box-shadow 0.15s;
   box-shadow:
     0 3px 6px rgba(0, 0, 0, 0.5),
     inset 0 1px 0 rgba(255, 255, 255, 0.3);
   user-select: none;
   -webkit-user-select: none;
   padding: 0;
+  z-index: 10;
 }
 
-.cross-btn:hover {
-  transform: scale(1.05);
-  filter: brightness(1.1);
+.ring-btn:hover {
+  transform: translate(-50%, -50%) scale(1.1);
+  filter: brightness(1.2);
 }
 
-.cross-btn:active {
-  transform: scale(0.95);
+.ring-btn:active {
+  transform: translate(-50%, -50%) scale(0.95);
   box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.5);
 }
 
-.cross-btn:disabled {
+.ring-btn:disabled {
   opacity: 0.4;
   cursor: not-allowed;
-  transform: none;
+  transform: translate(-50%, -50%);
 }
 
-/* Позиционирование */
-.cross-top { grid-column: 2; grid-row: 1; }
-.cross-left { grid-column: 1; grid-row: 2; font-size: 20px; }
-.cross-center { grid-column: 2; grid-row: 2; font-size: 20px; }
-.cross-right { grid-column: 3; grid-row: 2; font-size: 20px; }
-.cross-bottom { grid-column: 2; grid-row: 3; }
+/* Класс для зеркального отражения эмодзи */
+.mirrored-emoji {
+  display: inline-block;
+  transform: scaleX(-1);
+  font-size: 20px; /* Чуть уменьшим размер эмодзи, чтобы влез в кнопку */
+}
 
-/* ============================================
-   ОТТЕНКИ ДЛЯ КНОПОК
-   ============================================ */
-
-.cross-top,
-.cross-bottom {
+/* Цветовые оттенки */
+#rotateMechCW, #rotateMechCCW {
   background: linear-gradient(180deg, #a8a8a8, #6a6a6a);
   border-color: #999;
 }
-
-.cross-top:hover,
-.cross-bottom:hover {
+#rotateMechCW:hover, #rotateMechCCW:hover {
   background: linear-gradient(180deg, #c0c0c0, #7a7a7a);
 }
 
-.cross-left,
-.cross-right {
+#rotateCCW, #rotateCW {
   background: linear-gradient(180deg, #7a7a7a, #3a3a3a);
   border-color: #666;
 }
-
-.cross-left:hover,
-.cross-right:hover {
+#rotateCCW:hover, #rotateCW:hover {
   background: linear-gradient(180deg, #909090, #4a4a4a);
 }
 
-.cross-center {
+#restartCrossBtn {
   background: linear-gradient(180deg, #8e8e8e, #4e4e4e);
   border-color: #777;
 }
-
-.cross-center:hover {
+#restartCrossBtn:hover {
   background: linear-gradient(180deg, #a5a5a5, #606060);
 }
 
@@ -300,10 +281,7 @@
   transform-origin: 100px 100px;
 }
 
-/* ============================================
-   ЦЕНТРАЛЬНЫЙ ШТУРВАЛ
-   ============================================ */
-
+/* --- Центральный штурвал --- */
 .center-wheel-group {
   transition: opacity 0.3s ease;
   will-change: transform;
@@ -391,10 +369,6 @@
   stroke-width: 1.5;
 }
 
-.satellite-knob-mark {
-  fill: #b0b0b0;
-}
-
 .satellite-digit {
   font-size: 10px;
   fill: #ddd;
@@ -413,10 +387,7 @@
           drop-shadow(0 0 6px rgba(255, 255, 255, 0.6));
 }
 
-/* ============================================
-   СОЛНЕЧНАЯ ШЕСТЕРЁНКА — ЛИМБ
-   ============================================ */
-
+/* --- Солнечная шестерёнка --- */
 .sun-rim {
   fill: url(#sunGradient);
   stroke: #b0b0b0;
@@ -467,10 +438,7 @@
   transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
-/* ============================================
-   ЭФФЕКТ "ЗАЕЗДА" СОЛНЕЧНОЙ ПОД ШТУРВАЛ
-   ============================================ */
-
+/* --- Эффект "заезда" --- */
 .sun-group {
   transition: opacity 0.45s ease;
   transform-box: view-box;
@@ -541,19 +509,42 @@
    МОБИЛЬНАЯ АДАПТАЦИЯ
    ============================================ */
 @media (max-width: 500px) {
-  .game { padding: 10px; padding-top: 56px; border-width: 4px; }
-  .cross { grid-template-columns: 42px 42px 42px; grid-template-rows: 42px 42px 42px; }
-  .cross-btn { font-size: 20px; }
-  .cross-left, .cross-right, .cross-center { font-size: 17px; }
-  .target-digit { width: 28px; height: 28px; font-size: 17px; }
+  .game { padding: 10px; padding-top: 10px; border-width: 4px; }
+  
+  .ring-btn {
+    width: 38px;
+    height: 38px;
+    font-size: 18px;
+  }
+
+  .mirrored-emoji {
+    font-size: 18px;
+  }
+  
+  .panel { padding: 4px 10px; min-width: 120px; }
+  .target-digit { font-size: 20px; width: 32px; height: 32px; }
+  .target-digits { gap: 6px; }
+  
   .side-panel { width: 56px; }
   .side-value { font-size: 17px; }
+  .header { margin-top: 50px; }
 }
 
 @media (max-height: 700px) {
-  .game { padding-top: 52px; }
-  .cross { grid-template-columns: 40px 40px 40px; grid-template-rows: 40px 40px 40px; }
-  .cross-btn { font-size: 18px; }
-  .cross-left, .cross-right, .cross-center { font-size: 15px; }
+  .game { padding-top: 10px; }
   .status { font-size: 11px; min-height: 20px; }
+  
+  .ring-btn {
+    width: 34px;
+    height: 34px;
+    font-size: 16px;
+  }
+
+  .mirrored-emoji {
+    font-size: 16px;
+  }
+  
+  .target-digit { font-size: 18px; width: 30px; height: 30px; }
+  .panel { min-width: 110px; }
+  .header { margin-top: 46px; }
 }
