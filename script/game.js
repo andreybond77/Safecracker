@@ -65,6 +65,34 @@ function angleDiff(a, b) {
   return diff;
 }
 
+/* ============================================
+   РАСЧЕТ ПОЗИЦИЙ КНОПОК НА КРУГЕ
+   ============================================ */
+function positionRingButtons() {
+  const buttons = document.querySelectorAll(".ring-btn");
+  if (!buttons.length) return;
+
+  // Радиус 46% от ширины контейнера. 
+  // В viewBox 200 круг r=96 занимает 96% (диаметр 192).
+  // R=46% гарантирует, что кнопки не вылезут за края контейнера.
+  const R = 46; 
+
+  buttons.forEach(btn => {
+    const angleDeg = parseFloat(btn.dataset.angle) || 0;
+    // 0 градусов — верх (вычитаем 90)
+    const rad = (angleDeg - 90) * Math.PI / 180;
+    
+    // Вычисляем X и Y в процентах
+    const x = 50 + R * Math.cos(rad);
+    const y = 50 + R * Math.sin(rad);
+
+    btn.style.left = `${x}%`;
+    btn.style.top = `${y}%`;
+  });
+}
+
+window.addEventListener("resize", positionRingButtons);
+
 let satellites = [];
 let sunPositionIndex = -1;
 let currentSunPos = { x: CENTER_X, y: CENTER_Y };
@@ -92,7 +120,6 @@ const SUN_LIMB_STEP = 360 / 24;
 const SAT_ROTATE_DURATION = 0.3;
 const WHEEL_SPIN_DURATION = 1.1;
 
-// 🔊 Переменная для ограничения частоты звука перетаскивания
 let lastDragSoundTime = 0;
 
 const svg = document.getElementById("field");
@@ -110,7 +137,7 @@ const soundToggleBtn = document.getElementById("soundToggleBtn");
 const exitMenuBtn = document.getElementById("exitMenuBtn");
 
 /* ============================================
-   🔊 ЗВУКОВОЙ ДВИЖОК (Web Audio API)
+   🔊 ЗВУКОВОЙ ДВИЖОК
    ============================================ */
 
 class SoundEngine {
@@ -280,7 +307,7 @@ exitMenuBtn.addEventListener("click", (e) => {
 });
 
 /* ============================================
-   ОСТАЛЬНАЯ ЛОГИКА ИГРЫ
+   ЛОГИКА
    ============================================ */
 
 function generateSatelliteDigits() {
@@ -453,7 +480,6 @@ function buildField() {
     sat.centerX = pos.x;
     sat.centerY = pos.y;
     sat.knobEl = knob;
-    sat.markEl = null;
 
     sat.digitsGroupEl = createSVG("g", { class: "satellite-digits-group" });
     sat.digitsGroupEl.style.transformOrigin = `${pos.x}px ${pos.y}px`;
@@ -560,27 +586,6 @@ function drawSatelliteDigits(sat) {
   const group = sat.digitsGroupEl;
   group.innerHTML = "";
 
-  const knobRadius = SATELLITE_RADIUS * 0.45;
-  const markWidth = 4;
-  const markHeight = knobRadius * 0.8;
-  const markX = sat.centerX - markWidth / 2;
-  const markY = sat.centerY - knobRadius - 2;
-
-  if (sat.markEl && sat.markEl.parentNode) {
-    sat.markEl.remove();
-  }
-
-  const mark = createSVG("rect", {
-    x: markX, y: markY,
-    width: markWidth, height: markHeight,
-    rx: 2,
-    class: "satellite-knob-mark",
-    transform: `rotate(${sat.angle}, ${sat.centerX}, ${sat.centerY})`
-  });
-
-  sat.markEl = mark;
-  sat.groupEl.insertBefore(mark, sat.digitsGroupEl);
-
   const activeAngle = getActiveAngle(sat);
   const step = 360 / sat.digits.length;
 
@@ -642,10 +647,6 @@ function drawLinkLines() {
     mechGroup.insertBefore(line, mechGroup.firstChild);
   });
 }
-
-/* ============================================
-   ОБНОВЛЕНИЕ СЛОЁВ + ЭФФЕКТ "ЗАЕЗДА"
-   ============================================ */
 
 function updateCenterWheelState() {
   const wheel = document.getElementById("centerWheel");
@@ -787,10 +788,6 @@ function setButtonsEnabled(enabled) {
   });
 }
 
-/* ============================================
-   ТАЙМЕР
-   ============================================ */
-
 function updateTimerDisplay() {
   if (!timerValueEl) return;
   const m = Math.floor(timerSeconds / 60).toString().padStart(2, '0');
@@ -810,10 +807,6 @@ function stopTimer() {
   clearInterval(timerInterval);
   timerInterval = null;
 }
-
-/* ============================================
-   ВЗАИМОДЕЙСТВИЕ
-   ============================================ */
 
 function onSunMouseDown(e) {
   if (gameWon || isRotatingMechanism) return;
@@ -1271,7 +1264,6 @@ function init() {
       centerX: 0,
       centerY: 0,
       knobEl: null,
-      markEl: null,
     };
   });
 
@@ -1311,6 +1303,9 @@ function init() {
   if (!gameRecorded) recordGameStart();
 
   startTimer();
+  
+  // Позиционируем кнопки после инициализации
+  positionRingButtons();
 }
 
 rotateCWBtn.addEventListener("click", () => rotate(true));
